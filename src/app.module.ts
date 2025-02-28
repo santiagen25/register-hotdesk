@@ -8,13 +8,22 @@ import { RegisterOfficeCommandHandler } from './core/application/office/register
 import { InMemoryHotDeskRepository } from './core/application/hotdesk/in-memory-hotdesk.repository';
 import { InMemoryMeetingRoomRepository } from './core/application/meeting-room/in-memory-meeting-room.repository';
 import { InMemoryOfficeRepository } from './core/application/office/in-memory-office.repository';
+import { InMemoryReservationRepository } from './core/application/reservation/in-memory-reservation.repository';
+import { ReserveMeetingRoomCommandHandler } from './core/application/reservation/reserve-meeting-room.command-handler';
+import { ReservationController } from './core/infrastructure/reservation.controller';
 
 @Module({
-  controllers: [HotDeskController, MeetingRoomController, OfficeController],
+  controllers: [
+    HotDeskController,
+    MeetingRoomController,
+    OfficeController,
+    ReservationController,
+  ],
   providers: [
     RegisterHotDeskCommandHandler,
     RegisterMeetingRoomCommandHandler,
     RegisterOfficeCommandHandler,
+    ReserveMeetingRoomCommandHandler,
     {
       provide: 'HotDeskRepository',
       useClass: InMemoryHotDeskRepository,
@@ -26,6 +35,10 @@ import { InMemoryOfficeRepository } from './core/application/office/in-memory-of
     {
       provide: 'OfficeRepository',
       useClass: InMemoryOfficeRepository,
+    },
+    {
+      provide: 'ReservationRepository',
+      useClass: InMemoryReservationRepository,
     },
   ],
 })
