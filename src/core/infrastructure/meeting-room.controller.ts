@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   Controller,
   Post,
@@ -20,14 +23,10 @@ export class MeetingRoomController {
       const command = new RegisterMeetingRoomCommand(body.name, body.capacity);
       return this.registerMeetingRoomHandler.execute(command);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       if (error.message.includes('400')) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       if (error.message.includes('498')) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
         throw new HttpException(error.message, HttpStatus.CONFLICT);
       }
       throw new HttpException(

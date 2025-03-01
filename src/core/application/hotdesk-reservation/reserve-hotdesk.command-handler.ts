@@ -15,7 +15,6 @@ export class ReserveHotDeskCommandHandler {
   execute(command: ReserveHotDeskCommand): HotDeskReservation {
     const { userId, date } = command;
 
-    // Validaciones
     if (!userId || typeof userId !== 'string' || !date) {
       throw new Error('400: Bad Request - Invalid input');
     }
@@ -26,14 +25,12 @@ export class ReserveHotDeskCommandHandler {
       );
     }
 
-    // Consultar el contexto de Memberships
     const membershipInfo = this.membershipsService.getMembershipInfo(
       userId,
       date,
     );
     const includedInMembership = membershipInfo.remainingCredits > 0;
 
-    // Crear la reserva
     const reservation = new HotDeskReservation(
       userId,
       date,

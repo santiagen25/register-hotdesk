@@ -8,7 +8,6 @@ export class HotDesk {
   updatedAt: Date;
 
   constructor(number: number) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     this.id = uuidv4();
     this.number = number;
     this.status = 'Active';

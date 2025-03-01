@@ -20,7 +20,6 @@ export class ReserveMeetingRoomCommandHandler {
   execute(command: ReserveMeetingRoomCommand): Reservation {
     const { meetingRoomId, userId, date, hour, duration } = command;
 
-    // Validaciones
     const meetingRoom = this.meetingRoomRepository.findByName(meetingRoomId);
     if (!meetingRoom) {
       throw new Error('404: Not Found - MeetingRoom does not exist');
@@ -34,7 +33,7 @@ export class ReserveMeetingRoomCommandHandler {
       throw new Error('400: Bad Request - Invalid duration');
     }
 
-    // Verificar que no haya conflicto de reservas en la misma franja horaria
+    //miramos que no haya conflicto de reservas en el mismo lapso de tiempo
     const existingReservations =
       this.reservationRepository.findByMeetingRoomAndDate(meetingRoomId, date);
     for (const res of existingReservations) {
@@ -50,7 +49,6 @@ export class ReserveMeetingRoomCommandHandler {
       }
     }
 
-    // Crear la reserva
     const reservation = new Reservation(
       meetingRoomId,
       userId,
@@ -60,7 +58,7 @@ export class ReserveMeetingRoomCommandHandler {
     );
     this.reservationRepository.save(reservation);
 
-    // Asignar un HotDesk de cortesía si hay disponibilidad
+    //si hay disponibilidad asignamos un hotdesk de cortesia
     const availableHotDesk = this.hotDeskRepository.findByNumber(1);
     if (availableHotDesk) {
       this.hotDeskRepository.save(new HotDesk(availableHotDesk.number));
