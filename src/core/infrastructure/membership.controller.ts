@@ -9,29 +9,42 @@ import {
   HttpStatus,
   Inject,
 } from '@nestjs/common';
-import { CreateMembershipCommandHandler } from '../application/membership/create-membership.command-handler';
-import { CreateMembershipCommand } from '../application/membership/create-membership.command';
+import { RegisterPackageCommandHandler } from '../application/membership/register-package.command-handler';
+import { RegisterPackageCommand } from '../application/membership/register-package.command';
 
 @Controller('membership')
 export class MembershipController {
   constructor(
-    @Inject(CreateMembershipCommandHandler)
-    private readonly commandHandler: CreateMembershipCommandHandler,
+    @Inject(RegisterPackageCommandHandler)
+    private readonly registerPackageHandler: RegisterPackageCommandHandler,
   ) {}
 
-  @Post()
-  createMembership(@Body() body: { userId: string }) {
+  @Post('/package')
+  registerPackage(
+    @Body()
+    body: {
+      membershipId: string;
+      credits: number;
+      year: number;
+      month: number;
+    },
+  ) {
     try {
-      const membership = this.commandHandler.execute(
-        new CreateMembershipCommand(body.userId),
+      const packageInstance = this.registerPackageHandler.execute(
+        new RegisterPackageCommand(
+          body.membershipId,
+          body.credits,
+          body.year,
+          body.month,
+        ),
       );
-      return { status: 'Created', membership };
+      return { status: 'Created', package: packageInstance };
     } catch (error) {
       if (error.message.includes('400')) {
         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
       }
-      if (error.message.includes('409')) {
-        throw new HttpException(error.message, HttpStatus.CONFLICT);
+      if (error.message.includes('404')) {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
       }
       throw new HttpException(
         'Internal Server Error',

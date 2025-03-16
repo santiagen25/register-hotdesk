@@ -84,3 +84,12 @@ npm run test
    curl -X POST http://localhost:3000/hotdesk-reservation \
      -H "Content-Type: application/json" \
      -d '{"userId": "123e4567-e89b-12d3-a456-426614174000", "date": "2025-02-20"}'
+
+- **Create-Membership**
+   curl -X POST http://localhost:3000/membership -H "Content-Type: application/json" -d '{"userId": "user-123"}'
+
+- **Register-Package**
+   curl -X POST http://localhost:3000/membership/package -H "Content-Type: application/json" -d '{"membershipId": "membership-123", "credits": 10, "year": 2025, "month": 5}'
+
+- **8**
+

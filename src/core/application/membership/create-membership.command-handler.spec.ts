@@ -37,12 +37,10 @@ describe('CreateMembershipCommandHandler', () => {
   });
 
   it('❌ Debería lanzar error 409 si el usuario ya tiene una membresía', () => {
-    const command1 = new CreateMembershipCommand('user-123');
-    handler.execute(command1); // Primera ejecución
+    handler.execute(new CreateMembershipCommand('user-123')); // Crear primera membresía
 
-    const command2 = new CreateMembershipCommand('user-123');
-    expect(() => handler.execute(command2)).toThrow(
-      '409: Conflict - Membership already exists',
-    );
+    expect(() =>
+      handler.execute(new CreateMembershipCommand('user-123')),
+    ).toThrow('409: Conflict - Membership already exists');
   });
 });
