@@ -1,3 +1,4 @@
+import { PackageSubscribedEvent } from '../application/membership/package-subscribed.event';
 import { Package } from './package.entity';
 
 export class Membership {
@@ -23,5 +24,19 @@ export class Membership {
 
   getPackages(): Package[] {
     return this.packages;
+  }
+
+  applyEvents(events: any[]): void {
+    for (const event of events) {
+      if (event instanceof PackageSubscribedEvent) {
+        this.addPackage(
+          new Package(
+            event.credits,
+            new Date(event.startDate).getFullYear(),
+            new Date(event.startDate).getMonth() + 1,
+          ),
+        );
+      }
+    }
   }
 }

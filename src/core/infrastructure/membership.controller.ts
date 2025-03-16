@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -25,14 +27,14 @@ export class MembershipController {
       const result = this.queryHandler.execute(
         new GetMembershipSummaryQuery(userId),
       );
+      if (!result) {
+        throw new HttpException(
+          '404: Not Found - Membership does not exist',
+          HttpStatus.NOT_FOUND,
+        );
+      }
       return { status: 'OK', membership: result };
     } catch (error) {
-      if (error.message.includes('400')) {
-        throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-      }
-      if (error.message.includes('404')) {
-        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
-      }
       throw new HttpException(
         'Internal Server Error',
         HttpStatus.INTERNAL_SERVER_ERROR,

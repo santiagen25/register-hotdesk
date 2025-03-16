@@ -6,7 +6,9 @@ export class MembershipReadModel {
   findByUserId(
     userId: string,
   ): { id: string; user_id: string; total_credits: number } | undefined {
-    const membership = this.membershipRepository.findByUserId(userId);
+    const membership = this.membershipRepository.findById(
+      `membership-${userId}`,
+    );
     if (!membership) return undefined;
 
     const totalCredits = membership
