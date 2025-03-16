@@ -5,7 +5,7 @@ export class Membership {
   readonly userId: string;
   readonly active: boolean;
   readonly createdAt: Date;
-  private packages: Package[] = []; // 📌 Agregamos una lista para almacenar paquetes
+  private packages: Package[] = [];
 
   constructor(userId: string) {
     this.id = `membership-${userId}`;

@@ -33,9 +33,9 @@ describe('GetMembershipSummaryQueryHandler', () => {
 
   it('Deberia lanzar error 400 si el userId es invalido', () => {
     const invalidQueries = [
-      new GetMembershipSummaryQuery(''), // Vacío
-      new GetMembershipSummaryQuery(null as unknown as string), // Null
-      new GetMembershipSummaryQuery(123 as unknown as string), // No es string
+      new GetMembershipSummaryQuery(''),
+      new GetMembershipSummaryQuery(null as unknown as string),
+      new GetMembershipSummaryQuery(123 as unknown as string),
     ];
 
     invalidQueries.forEach((query) => {

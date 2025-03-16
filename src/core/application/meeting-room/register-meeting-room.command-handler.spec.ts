@@ -26,10 +26,10 @@ describe('RegisterMeetingRoomCommandHandler', () => {
 
   it('Deberia lanzar error 400 si la string o el number son incorrectos', () => {
     const invalidCommands = [
-      new RegisterMeetingRoomCommand(null as unknown as string, 0), // Nombre incorrecto
-      new RegisterMeetingRoomCommand('   ', 1), // Nombre vacio
-      new RegisterMeetingRoomCommand('Sala B', 2.5), // Capacidad incorrecto
-      new RegisterMeetingRoomCommand('Sala B', -5), // Capacidad negativa
+      new RegisterMeetingRoomCommand(null as unknown as string, 0),
+      new RegisterMeetingRoomCommand('   ', 1),
+      new RegisterMeetingRoomCommand('Sala B', 2.5),
+      new RegisterMeetingRoomCommand('Sala B', -5),
     ];
 
     invalidCommands.forEach((command) => {
@@ -43,7 +43,7 @@ describe('RegisterMeetingRoomCommandHandler', () => {
     const command1 = new RegisterMeetingRoomCommand('Sala A', 10);
     const command2 = new RegisterMeetingRoomCommand('Sala A', 5);
 
-    handler.execute(command1); // Registro el primero
+    handler.execute(command1);
 
     expect(() => handler.execute(command2)).toThrow(
       '498: Conflict - MeetingRoom name already exists',

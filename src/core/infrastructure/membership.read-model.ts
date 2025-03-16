@@ -1,4 +1,4 @@
-import { MembershipRepository } from './membership.repository';
+import { MembershipRepository } from '../application/membership/membership.repository';
 
 export class MembershipReadModel {
   constructor(private readonly membershipRepository: MembershipRepository) {}

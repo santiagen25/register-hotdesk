@@ -26,11 +26,11 @@ describe('RegisterOfficeCommandHandler', () => {
 
   it('Deberia lanzar error 400 si alguno de los campos es invalido', () => {
     const invalidCommands = [
-      new RegisterOfficeCommand(2.5), // number no es integer
-      new RegisterOfficeCommand(-3), // number es negativo
-      new RegisterOfficeCommand(5, 2.5), // leasePeriod no es integer
-      new RegisterOfficeCommand(5, -3), // leasePeriod es negativo
-      new RegisterOfficeCommand(5, 2, 'Valor no valido'), // status tiene un valor no valido
+      new RegisterOfficeCommand(2.5),
+      new RegisterOfficeCommand(-3),
+      new RegisterOfficeCommand(5, 2.5),
+      new RegisterOfficeCommand(5, -3),
+      new RegisterOfficeCommand(5, 2, 'Valor no valido'),
     ];
 
     invalidCommands.forEach((command) => {
@@ -44,7 +44,7 @@ describe('RegisterOfficeCommandHandler', () => {
     const command1 = new RegisterOfficeCommand(10);
     const command2 = new RegisterOfficeCommand(10);
 
-    handler.execute(command1); // Registro el primero
+    handler.execute(command1);
 
     expect(() => handler.execute(command2)).toThrow(
       '498: Conflict - Office number already exists',

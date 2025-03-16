@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { CreateMembershipCommand } from './create-membership.command';
-import { MembershipRepository } from './../../infrastructure/membership.repository';
+import { MembershipRepository } from './membership.repository';
 import { Membership } from '../../domain/membership.entity';
 import { MembershipCreatedEvent } from './membership.event';
 
@@ -25,7 +25,7 @@ export class CreateMembershipCommandHandler {
     const membership = new Membership(userId);
     this.membershipRepository.save(membership);
 
-    // Publicamos el evento
+    //publico evento
     const event = new MembershipCreatedEvent(userId);
     this.membershipRepository.publishEvent(event);
 

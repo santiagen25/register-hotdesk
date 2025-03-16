@@ -24,18 +24,16 @@ describe('ReserveMeetingRoomCommandHandler', () => {
       hotDeskRepository,
     );
 
-    // Crear MeetingRoom con ID manual
     const defaultRoom = new MeetingRoom('Sala A', 10);
-    (defaultRoom as any).id = 'meeting-room-123'; // Forzar ID conocido
+    (defaultRoom as any).id = 'meeting-room-123';
     meetingRoomRepository.save(defaultRoom);
 
-    // 🔥 Verificar si realmente se ha guardado en el repositorio
     console.log('Salas guardadas en el repositorio:', meetingRoomRepository);
   });
 
   it('Deberia reservar una sala de reuniones con datos validos', () => {
     const command = new ReserveMeetingRoomCommand(
-      'meeting-room-123', // ⚠️ Este ID debe coincidir con el que se guardó en beforeEach
+      'meeting-room-123',
       'user-123',
       '2025-02-20',
       10,
@@ -58,8 +56,9 @@ describe('ReserveMeetingRoomCommandHandler', () => {
       10,
       2,
     );
-    // eslint-disable-next-line prettier/prettier
-    expect(() => handler.execute(command)).toThrow('404: Not Found - MeetingRoom does not exist');
+    expect(() => handler.execute(command)).toThrow(
+      '404: Not Found - MeetingRoom does not exist',
+    );
   });
 
   it('Deberia lanzar error 400 si la hora es inválida', () => {
@@ -67,9 +66,9 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     meetingRoomRepository.save(room);
 
     const invalidCommands = [
-      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', -1, 2), // Hora negativa
-      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 25, 2), // Hora fuera de rango
-      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10.5, 2), // Hora decimal
+      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', -1, 2),
+      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 25, 2),
+      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10.5, 2),
     ];
 
     invalidCommands.forEach((command) => {
@@ -84,9 +83,9 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     meetingRoomRepository.save(room);
 
     const invalidCommands = [
-      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10, -1), // Duración negativa
-      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10, 13), // Duración demasiado larga
-      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10, 1.5), // Duración decimal
+      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10, -1),
+      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10, 13),
+      new ReserveMeetingRoomCommand(room.id, 'user-123', '2025-02-20', 10, 1.5),
     ];
 
     invalidCommands.forEach((command) => {
@@ -100,7 +99,6 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     const room = new MeetingRoom('Sala D', 15);
     meetingRoomRepository.save(room);
 
-    // Primera reserva de 10:00 a 12:00
     const command1 = new ReserveMeetingRoomCommand(
       room.id,
       'user-123',
@@ -110,7 +108,6 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     );
     handler.execute(command1);
 
-    // Segunda reserva que se solapa con la anterior
     const command2 = new ReserveMeetingRoomCommand(
       room.id,
       'user-456',

@@ -1,6 +1,6 @@
-import { Membership } from '../domain/membership.entity';
-import { MembershipCreatedEvent } from '../application/membership/membership.event';
-import { PackageSubscribedEvent } from '../application/membership/package-subscribed.event';
+import { Membership } from '../../domain/membership.entity';
+import { MembershipCreatedEvent } from './membership.event';
+import { PackageSubscribedEvent } from './package-subscribed.event';
 
 export class MembershipRepository {
   private memberships: Membership[] = [];
@@ -23,9 +23,11 @@ export class MembershipRepository {
     );
 
     if (existingIndex !== -1) {
-      this.memberships[existingIndex] = membership; // Actualiza si ya existe
+      //si ya existe, lo actualizamos
+      this.memberships[existingIndex] = membership;
     } else {
-      this.memberships.push(membership); // Agrega una nueva membresia
+      //añadimos membresia
+      this.memberships.push(membership);
     }
   }
 

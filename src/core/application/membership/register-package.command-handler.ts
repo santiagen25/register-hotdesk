@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { RegisterPackageCommand } from './register-package.command';
-import { MembershipRepository } from '../../infrastructure/membership.repository';
+import { MembershipRepository } from './membership.repository';
 import { PackageSubscribedEvent } from './package-subscribed.event';
 import { Package } from '../../domain/package.entity';
 
@@ -13,17 +13,20 @@ export class RegisterPackageCommandHandler {
 
   execute(command: RegisterPackageCommand): Package {
     const { membershipId, credits, year, month } = command;
+    const errBadRequestText = '400: Bad Request';
 
+    //creo que es mejor poner los ifs 400 por separado
+    //le quita complejidad a la lectura del código
     if (
       !membershipId ||
       typeof membershipId !== 'string' ||
       membershipId.trim() === ''
     ) {
-      throw new Error('400: Bad Request - Invalid membershipId');
+      throw new Error(errBadRequestText);
     }
 
     if (!Number.isInteger(credits) || credits <= 0) {
-      throw new Error('400: Bad Request - Invalid credits');
+      throw new Error(errBadRequestText);
     }
 
     if (
@@ -32,7 +35,7 @@ export class RegisterPackageCommandHandler {
       month < 1 ||
       month > 12
     ) {
-      throw new Error('400: Bad Request - Invalid date parameters');
+      throw new Error(errBadRequestText);
     }
 
     const membership = this.membershipRepository.findById(membershipId);
@@ -40,14 +43,12 @@ export class RegisterPackageCommandHandler {
       throw new Error('404: Not Found - Membership does not exist');
     }
 
-    // Crear el paquete con fechas calculadas
     const packageInstance = new Package(credits, year, month);
 
-    // Agregar el paquete a la membresia
+    //agregamos paquete a la membresia
     membership.addPackage(packageInstance);
     this.membershipRepository.save(membership);
 
-    // Publicar evento de package registrado
     const event = new PackageSubscribedEvent(
       membershipId,
       packageInstance.id,

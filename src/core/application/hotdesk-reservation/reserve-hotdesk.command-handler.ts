@@ -15,6 +15,7 @@ export class ReserveHotDeskCommandHandler {
   execute(command: ReserveHotDeskCommand): HotDeskReservation {
     const { userId, date } = command;
 
+    //la regexp es para comprobar que la fecha es formato YYYY-MM-DD (la mejor fecha habida y por haber)
     if (
       !userId ||
       typeof userId !== 'string' ||

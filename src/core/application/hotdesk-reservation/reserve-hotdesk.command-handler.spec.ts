@@ -26,14 +26,14 @@ describe('ReserveHotDeskCommandHandler', () => {
     expect(result.userId).toBe('user-123');
     expect(result.date).toBe('2025-02-20');
     expect(result.status).toBe('Active');
-    expect(typeof result.includedInMembership).toBe('boolean'); // Puede ser true o false
+    expect(typeof result.includedInMembership).toBe('boolean');
   });
 
   it('Deberia lanzar error 400 si el userId es invalido', () => {
     const invalidCommands = [
-      new ReserveHotDeskCommand('', '2025-02-20'), // userId vacío
-      new ReserveHotDeskCommand(null as unknown as string, '2025-02-20'), // userId null
-      new ReserveHotDeskCommand(123 as unknown as string, '2025-02-20'), // userId numérico
+      new ReserveHotDeskCommand('', '2025-02-20'),
+      new ReserveHotDeskCommand(null as unknown as string, '2025-02-20'),
+      new ReserveHotDeskCommand(123 as unknown as string, '2025-02-20'),
     ];
 
     invalidCommands.forEach((command) => {
@@ -45,13 +45,13 @@ describe('ReserveHotDeskCommandHandler', () => {
 
   it('Deberia lanzar error 400 si la fecha es inválida', () => {
     const invalidCommands = [
-      new ReserveHotDeskCommand('user-123', ''), // Fecha vacía
-      new ReserveHotDeskCommand('user-123', null as unknown as string), // Fecha null
-      new ReserveHotDeskCommand('user-123', 'not-a-date'), // Texto no fecha
-      new ReserveHotDeskCommand('user-123', '2025-02-30'), // Día invalido (febrero 30)
-      new ReserveHotDeskCommand('user-123', '2025-13-01'), // Mes invalido (mes 13)
-      new ReserveHotDeskCommand('user-123', '2025-00-10'), // Mes 00
-      new ReserveHotDeskCommand('user-123', 'abcd-ef-gh'), // Totalmente invalido
+      new ReserveHotDeskCommand('user-123', ''),
+      new ReserveHotDeskCommand('user-123', null as unknown as string),
+      new ReserveHotDeskCommand('user-123', 'not-a-date'),
+      new ReserveHotDeskCommand('user-123', '2025-02-30'),
+      new ReserveHotDeskCommand('user-123', '2025-13-01'),
+      new ReserveHotDeskCommand('user-123', '2025-00-10'),
+      new ReserveHotDeskCommand('user-123', 'abcd-ef-gh'),
     ];
 
     invalidCommands.forEach((command) => {
@@ -63,7 +63,7 @@ describe('ReserveHotDeskCommandHandler', () => {
 
   it('Deberia lanzar error 409 si el usuario ya tiene una reserva para esa fecha', () => {
     const command1 = new ReserveHotDeskCommand('user-123', '2025-02-20');
-    handler.execute(command1); // Primera reserva exitosa
+    handler.execute(command1);
 
     const command2 = new ReserveHotDeskCommand('user-123', '2025-02-20');
     expect(() => handler.execute(command2)).toThrow(
@@ -74,7 +74,7 @@ describe('ReserveHotDeskCommandHandler', () => {
   it('Deberia asignar correctamente si la reserva está cubierta por la membresia', () => {
     jest.spyOn(membershipsService, 'getMembershipInfo').mockReturnValue({
       membershipId: 'membership-user-123',
-      remainingCredits: 5, // Simulamos que tiene créditos disponibles
+      remainingCredits: 5,
     });
 
     const command = new ReserveHotDeskCommand('user-123', '2025-02-20');
@@ -86,7 +86,7 @@ describe('ReserveHotDeskCommandHandler', () => {
   it('Deberia asignar correctamente si la reserva NO está cubierta por la membresia', () => {
     jest.spyOn(membershipsService, 'getMembershipInfo').mockReturnValue({
       membershipId: 'membership-user-123',
-      remainingCredits: 0, // Simulamos que NO tiene créditos disponibles
+      remainingCredits: 0,
     });
 
     const command = new ReserveHotDeskCommand('user-123', '2025-02-20');

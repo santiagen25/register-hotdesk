@@ -7,7 +7,7 @@ export class Package {
   constructor(credits: number, year: number, month: number) {
     this.id = `package-${Math.random().toString(36).substr(2, 9)}`;
     this.credits = credits;
-    this.startDate = new Date(year, month - 1, 1).toISOString(); // Primer día del mes
-    this.endDate = new Date(year, month, 0).toISOString(); // Último día del mes
+    this.startDate = new Date(year, month - 1, 1).toISOString(); //primer dia del mes
+    this.endDate = new Date(year, month, 0).toISOString(); //ultimo día del mes
   }
 }

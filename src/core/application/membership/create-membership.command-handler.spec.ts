@@ -1,5 +1,5 @@
 import { CreateMembershipCommandHandler } from './create-membership.command-handler';
-import { MembershipRepository } from '../../infrastructure/membership.repository';
+import { MembershipRepository } from './membership.repository';
 import { CreateMembershipCommand } from './create-membership.command';
 import { Membership } from '../../domain/membership.entity';
 
@@ -37,7 +37,7 @@ describe('CreateMembershipCommandHandler', () => {
   });
 
   it('Deberia lanzar error 409 si el usuario ya tiene una membresia', () => {
-    handler.execute(new CreateMembershipCommand('user-123')); // Crear primera membresia
+    handler.execute(new CreateMembershipCommand('user-123'));
 
     expect(() =>
       handler.execute(new CreateMembershipCommand('user-123')),

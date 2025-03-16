@@ -25,10 +25,10 @@ describe('RegisterHotDeskCommandHandler', () => {
 
   it('Deberia lanzar error 400 si el number no es un entero valido', () => {
     const invalidCommands = [
-      new RegisterHotDeskCommand(0), // Menor que 1
-      new RegisterHotDeskCommand(-3), // Negativo
-      new RegisterHotDeskCommand(null as unknown as number), // Nulo
-      new RegisterHotDeskCommand(NaN), // NaN
+      new RegisterHotDeskCommand(0),
+      new RegisterHotDeskCommand(-3),
+      new RegisterHotDeskCommand(null as unknown as number),
+      new RegisterHotDeskCommand(NaN),
     ];
 
     invalidCommands.forEach((command) => {
@@ -42,7 +42,7 @@ describe('RegisterHotDeskCommandHandler', () => {
     const command1 = new RegisterHotDeskCommand(10);
     const command2 = new RegisterHotDeskCommand(10);
 
-    handler.execute(command1); // Registro el primero
+    handler.execute(command1);
 
     expect(() => handler.execute(command2)).toThrow(
       '498: Conflict - HotDesk number already exists',
