@@ -20,7 +20,7 @@ describe('RegisterPackageCommandHandler', () => {
     console.log('Membresías en el repositorio después de guardar:', repository);
   });
 
-  it('✅ Debería registrar un package con datos válidos', () => {
+  it('Debería registrar un package con datos válidos', () => {
     const membership = repository.findByUserId('user-123');
     expect(membership).toBeDefined(); // Validar que la membresía existe
 
@@ -31,7 +31,7 @@ describe('RegisterPackageCommandHandler', () => {
     expect(result.credits).toBe(10);
   });
 
-  it('❌ Debería lanzar error 400 si los datos son inválidos', () => {
+  it('Debería lanzar error 400 si los datos son inválidos', () => {
     const invalidCommands = [
       new RegisterPackageCommand('', 10, 2025, 5), // membershipId vacío
       new RegisterPackageCommand('membership-123', 0, 2025, 5), // credits inválidos

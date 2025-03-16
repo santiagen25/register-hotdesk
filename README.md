@@ -91,5 +91,5 @@ npm run test
 - **Register-Package**
    curl -X POST http://localhost:3000/membership/package -H "Content-Type: application/json" -d '{"membershipId": "membership-123", "credits": 10, "year": 2025, "month": 5}'
 
-- **8**
-
+- **Get-Membership**
+   curl -X GET 'http://localhost:3000/membership/summary?userId=user-123'

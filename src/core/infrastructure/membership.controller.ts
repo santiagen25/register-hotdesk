@@ -1,44 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   Controller,
-  Post,
-  Body,
+  Get,
+  Query,
   HttpException,
   HttpStatus,
   Inject,
 } from '@nestjs/common';
-import { RegisterPackageCommandHandler } from '../application/membership/register-package.command-handler';
-import { RegisterPackageCommand } from '../application/membership/register-package.command';
+import { GetMembershipSummaryQueryHandler } from '../application/membership/get-membership-summary.query-handler';
+import { GetMembershipSummaryQuery } from '../application/membership/get-membership-summary.query';
 
 @Controller('membership')
 export class MembershipController {
   constructor(
-    @Inject(RegisterPackageCommandHandler)
-    private readonly registerPackageHandler: RegisterPackageCommandHandler,
+    @Inject(GetMembershipSummaryQueryHandler)
+    private readonly queryHandler: GetMembershipSummaryQueryHandler,
   ) {}
 
-  @Post('/package')
-  registerPackage(
-    @Body()
-    body: {
-      membershipId: string;
-      credits: number;
-      year: number;
-      month: number;
-    },
-  ) {
+  @Get('/summary')
+  getMembershipSummary(@Query('userId') userId: string) {
     try {
-      const packageInstance = this.registerPackageHandler.execute(
-        new RegisterPackageCommand(
-          body.membershipId,
-          body.credits,
-          body.year,
-          body.month,
-        ),
+      const result = this.queryHandler.execute(
+        new GetMembershipSummaryQuery(userId),
       );
-      return { status: 'Created', package: packageInstance };
+      return { status: 'OK', membership: result };
     } catch (error) {
       if (error.message.includes('400')) {
         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
