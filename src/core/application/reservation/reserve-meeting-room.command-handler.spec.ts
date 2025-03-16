@@ -33,7 +33,7 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     console.log('Salas guardadas en el repositorio:', meetingRoomRepository);
   });
 
-  it('Debería reservar una sala de reuniones con datos válidos', () => {
+  it('Deberia reservar una sala de reuniones con datos validos', () => {
     const command = new ReserveMeetingRoomCommand(
       'meeting-room-123', // ⚠️ Este ID debe coincidir con el que se guardó en beforeEach
       'user-123',
@@ -50,7 +50,7 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     expect(result.meetingRoomId).toBe('meeting-room-123');
   });
 
-  it('Debería lanzar error 404 si la sala de reuniones no existe', () => {
+  it('Deberia lanzar error 404 si la sala de reuniones no existe', () => {
     const command = new ReserveMeetingRoomCommand(
       'sala-inexistente',
       'user-123',
@@ -62,7 +62,7 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     expect(() => handler.execute(command)).toThrow('404: Not Found - MeetingRoom does not exist');
   });
 
-  it('Debería lanzar error 400 si la hora es inválida', () => {
+  it('Deberia lanzar error 400 si la hora es inválida', () => {
     const room = new MeetingRoom('Sala B', 8);
     meetingRoomRepository.save(room);
 
@@ -79,7 +79,7 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 400 si la duración es inválida', () => {
+  it('Deberia lanzar error 400 si la duración es inválida', () => {
     const room = new MeetingRoom('Sala C', 6);
     meetingRoomRepository.save(room);
 
@@ -96,7 +96,7 @@ describe('ReserveMeetingRoomCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 409 si la sala ya está reservada en esa franja horaria', () => {
+  it('Deberia lanzar error 409 si la sala ya está reservada en esa franja horaria', () => {
     const room = new MeetingRoom('Sala D', 15);
     meetingRoomRepository.save(room);
 

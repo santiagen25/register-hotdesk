@@ -19,20 +19,30 @@ La solución la he organizado en tres capas principales:
 
 ## Casos de Uso Implementados
 
-### 1️. **Registrar un HotDesk** (`RegisterHotDeskUseCase`)
+### 1. **Registrar un HotDesk** (`RegisterHotDeskUseCase`)
    - Recibe un número (`number`) y lo almacena si es valido y único.
 
-### 2️. **Registrar una Sala de Reunión** (`RegisterMeetingRoomUseCase`)
+### 2. **Registrar una Sala de Reunión** (`RegisterMeetingRoomUseCase`)
    - Permite registrar salas con un `name` y `capacity`, evitando duplicados.
 
-### 3️. **Registrar una Oficina** (`RegisterOfficeUseCase`)
+### 3. **Registrar una Oficina** (`RegisterOfficeUseCase`)
    - Registra oficinas con `number`, `leasePeriod` y `status` inicial.
 
-### 4️. **Reservar una Sala de Reunión** (`ReserveMeetingRoomUseCase`)
+### 4. **Reservar una Sala de Reunión** (`ReserveMeetingRoomUseCase`)
    - Gestiona la disponibilidad de salas y evita solapamientos de reservas.
 
-### 5️. **Reservar un HotDesk** (`ReserveHotDeskUseCase`)
-   - Verifica si el usuario ya tiene una reserva y consulta Memberships para comprobar si está cubierta por su membresía.
+### 5. **Reservar un HotDesk** (`ReserveHotDeskUseCase`)
+   - Verifica si el usuario ya tiene una reserva y consulta Memberships para comprobar si está cubierta por su membresia.
+
+### 6 **Crear una Membresía** (`CreateMembershipUseCase`)
+   - Registra una membresia para un usuario y evita registros duplicados.
+
+### 7 **Registrar un Paquete de Créditos** (`RegisterPackageUseCase`)
+   - Agrega un paquete de créditos a una membresia existente.
+
+### 8 **Obtener Información de una Membresía** (`GetMembershipSummaryUseCase`)
+   - Devuelve los créditos disponibles de un usuario dentro de su membresia.
+
 
 ---
 
@@ -45,7 +55,7 @@ La solución la he organizado en tres capas principales:
 ---
 
 ## **Archivo memberships.service**
-   Este archivo simula un servicio externo que devuelve información sobre la membresia de un usuario. Este servicio se usa en el caso de uso ReserveHotDeskUseCase, donde se necesita saber si la reserva de un HotDesk está cubierta por una membresía ya pagada.
+   Este archivo simula un servicio externo que devuelve información sobre la membresia de un usuario. Este servicio se usa en el caso de uso ReserveHotDeskUseCase, donde se necesita saber si la reserva de un HotDesk está cubierta por una membresia ya pagada.
 
 ---
 

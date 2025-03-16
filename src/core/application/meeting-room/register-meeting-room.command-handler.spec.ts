@@ -12,7 +12,7 @@ describe('RegisterMeetingRoomCommandHandler', () => {
     handler = new RegisterMeetingRoomCommandHandler(repository);
   });
 
-  it('Debería registrar una Meeting Room con un name y un number válidos', () => {
+  it('Deberia registrar una Meeting Room con un name y un number validos', () => {
     const command = new RegisterMeetingRoomCommand('Sala A', 10);
     const result = handler.execute(command);
 
@@ -24,7 +24,7 @@ describe('RegisterMeetingRoomCommandHandler', () => {
     expect(result.updatedAt).toBeInstanceOf(Date);
   });
 
-  it('Debería lanzar error 400 si la string o el number son incorrectos', () => {
+  it('Deberia lanzar error 400 si la string o el number son incorrectos', () => {
     const invalidCommands = [
       new RegisterMeetingRoomCommand(null as unknown as string, 0), // Nombre incorrecto
       new RegisterMeetingRoomCommand('   ', 1), // Nombre vacio
@@ -39,7 +39,7 @@ describe('RegisterMeetingRoomCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 498 si la Meeting Room ya existe', () => {
+  it('Deberia lanzar error 498 si la Meeting Room ya existe', () => {
     const command1 = new RegisterMeetingRoomCommand('Sala A', 10);
     const command2 = new RegisterMeetingRoomCommand('Sala A', 5);
 

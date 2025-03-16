@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { GetMembershipSummaryQueryHandler } from './get-membership-summary.query-handler';
 import { MembershipReadModel } from '../../infrastructure/membership.read-model';
 import { GetMembershipSummaryQuery } from './get-membership-summary.query';
@@ -15,7 +14,7 @@ describe('GetMembershipSummaryQueryHandler', () => {
     handler = new GetMembershipSummaryQueryHandler(readModel);
   });
 
-  it('Debería devolver el resumen de una membresía existente', () => {
+  it('Deberia devolver el resumen de una membresia existente', () => {
     jest.spyOn(readModel, 'findByUserId').mockReturnValue({
       id: 'membership-123',
       user_id: 'user-123',
@@ -32,7 +31,7 @@ describe('GetMembershipSummaryQueryHandler', () => {
     });
   });
 
-  it('Debería lanzar error 400 si el userId es inválido', () => {
+  it('Deberia lanzar error 400 si el userId es invalido', () => {
     const invalidQueries = [
       new GetMembershipSummaryQuery(''), // Vacío
       new GetMembershipSummaryQuery(null as unknown as string), // Null
@@ -46,7 +45,7 @@ describe('GetMembershipSummaryQueryHandler', () => {
     });
   });
 
-  it('Debería lanzar error 404 si la membresía no existe', () => {
+  it('Deberia lanzar error 404 si la membresia no existe', () => {
     jest.spyOn(readModel, 'findByUserId').mockReturnValue(undefined);
 
     const query = new GetMembershipSummaryQuery('user-456');

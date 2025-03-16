@@ -12,7 +12,7 @@ describe('RegisterHotDeskCommandHandler', () => {
     handler = new RegisterHotDeskCommandHandler(repository);
   });
 
-  it('Debería registrar un HotDesk con un number válido', () => {
+  it('Deberia registrar un HotDesk con un number valido', () => {
     const command = new RegisterHotDeskCommand(5);
     const result = handler.execute(command);
 
@@ -23,7 +23,7 @@ describe('RegisterHotDeskCommandHandler', () => {
     expect(result.updatedAt).toBeInstanceOf(Date);
   });
 
-  it('Debería lanzar error 400 si el number no es un entero válido', () => {
+  it('Deberia lanzar error 400 si el number no es un entero valido', () => {
     const invalidCommands = [
       new RegisterHotDeskCommand(0), // Menor que 1
       new RegisterHotDeskCommand(-3), // Negativo
@@ -38,7 +38,7 @@ describe('RegisterHotDeskCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 498 si el number ya existe', () => {
+  it('Deberia lanzar error 498 si el number ya existe', () => {
     const command1 = new RegisterHotDeskCommand(10);
     const command2 = new RegisterHotDeskCommand(10);
 

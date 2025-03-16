@@ -12,7 +12,7 @@ describe('CreateMembershipCommandHandler', () => {
     handler = new CreateMembershipCommandHandler(repository);
   });
 
-  it('Debería crear una membresía con datos válidos', () => {
+  it('Deberia crear una membresia con datos validos', () => {
     const command = new CreateMembershipCommand('user-123');
     const result = handler.execute(command);
 
@@ -22,7 +22,7 @@ describe('CreateMembershipCommandHandler', () => {
     expect(result.createdAt).toBeInstanceOf(Date);
   });
 
-  it('Debería lanzar error 400 si el userId es inválido', () => {
+  it('Deberia lanzar error 400 si el userId es invalido', () => {
     const invalidCommands = [
       new CreateMembershipCommand(''),
       new CreateMembershipCommand(null as unknown as string),
@@ -36,8 +36,8 @@ describe('CreateMembershipCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 409 si el usuario ya tiene una membresía', () => {
-    handler.execute(new CreateMembershipCommand('user-123')); // Crear primera membresía
+  it('Deberia lanzar error 409 si el usuario ya tiene una membresia', () => {
+    handler.execute(new CreateMembershipCommand('user-123')); // Crear primera membresia
 
     expect(() =>
       handler.execute(new CreateMembershipCommand('user-123')),

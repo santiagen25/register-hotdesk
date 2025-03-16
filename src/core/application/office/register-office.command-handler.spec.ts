@@ -12,7 +12,7 @@ describe('RegisterOfficeCommandHandler', () => {
     handler = new RegisterOfficeCommandHandler(repository);
   });
 
-  it('Debería registrar un Office con un number válido', () => {
+  it('Deberia registrar un Office con un number valido', () => {
     const command = new RegisterOfficeCommand(5, 2, 'Active');
     const result = handler.execute(command);
 
@@ -24,13 +24,13 @@ describe('RegisterOfficeCommandHandler', () => {
     expect(result.updatedAt).toBeInstanceOf(Date);
   });
 
-  it('Debería lanzar error 400 si alguno de los campos es inválido', () => {
+  it('Deberia lanzar error 400 si alguno de los campos es invalido', () => {
     const invalidCommands = [
       new RegisterOfficeCommand(2.5), // number no es integer
       new RegisterOfficeCommand(-3), // number es negativo
       new RegisterOfficeCommand(5, 2.5), // leasePeriod no es integer
       new RegisterOfficeCommand(5, -3), // leasePeriod es negativo
-      new RegisterOfficeCommand(5, 2, 'Valor no válido'), // status tiene un valor no valido
+      new RegisterOfficeCommand(5, 2, 'Valor no valido'), // status tiene un valor no valido
     ];
 
     invalidCommands.forEach((command) => {
@@ -40,7 +40,7 @@ describe('RegisterOfficeCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 498 si el number del Office ya existe', () => {
+  it('Deberia lanzar error 498 si el number del Office ya existe', () => {
     const command1 = new RegisterOfficeCommand(10);
     const command2 = new RegisterOfficeCommand(10);
 

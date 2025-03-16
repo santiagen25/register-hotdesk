@@ -18,7 +18,7 @@ describe('ReserveHotDeskCommandHandler', () => {
     );
   });
 
-  it('Debería reservar un HotDesk con datos válidos', () => {
+  it('Deberia reservar un HotDesk con datos validos', () => {
     const command = new ReserveHotDeskCommand('user-123', '2025-02-20');
     const result = handler.execute(command);
 
@@ -29,7 +29,7 @@ describe('ReserveHotDeskCommandHandler', () => {
     expect(typeof result.includedInMembership).toBe('boolean'); // Puede ser true o false
   });
 
-  it('Debería lanzar error 400 si el userId es inválido', () => {
+  it('Deberia lanzar error 400 si el userId es invalido', () => {
     const invalidCommands = [
       new ReserveHotDeskCommand('', '2025-02-20'), // userId vacío
       new ReserveHotDeskCommand(null as unknown as string, '2025-02-20'), // userId null
@@ -43,15 +43,15 @@ describe('ReserveHotDeskCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 400 si la fecha es inválida', () => {
+  it('Deberia lanzar error 400 si la fecha es inválida', () => {
     const invalidCommands = [
       new ReserveHotDeskCommand('user-123', ''), // Fecha vacía
       new ReserveHotDeskCommand('user-123', null as unknown as string), // Fecha null
       new ReserveHotDeskCommand('user-123', 'not-a-date'), // Texto no fecha
-      new ReserveHotDeskCommand('user-123', '2025-02-30'), // Día inválido (febrero 30)
-      new ReserveHotDeskCommand('user-123', '2025-13-01'), // Mes inválido (mes 13)
+      new ReserveHotDeskCommand('user-123', '2025-02-30'), // Día invalido (febrero 30)
+      new ReserveHotDeskCommand('user-123', '2025-13-01'), // Mes invalido (mes 13)
       new ReserveHotDeskCommand('user-123', '2025-00-10'), // Mes 00
-      new ReserveHotDeskCommand('user-123', 'abcd-ef-gh'), // Totalmente inválido
+      new ReserveHotDeskCommand('user-123', 'abcd-ef-gh'), // Totalmente invalido
     ];
 
     invalidCommands.forEach((command) => {
@@ -61,7 +61,7 @@ describe('ReserveHotDeskCommandHandler', () => {
     });
   });
 
-  it('Debería lanzar error 409 si el usuario ya tiene una reserva para esa fecha', () => {
+  it('Deberia lanzar error 409 si el usuario ya tiene una reserva para esa fecha', () => {
     const command1 = new ReserveHotDeskCommand('user-123', '2025-02-20');
     handler.execute(command1); // Primera reserva exitosa
 
@@ -71,7 +71,7 @@ describe('ReserveHotDeskCommandHandler', () => {
     );
   });
 
-  it('Debería asignar correctamente si la reserva está cubierta por la membresía', () => {
+  it('Deberia asignar correctamente si la reserva está cubierta por la membresia', () => {
     jest.spyOn(membershipsService, 'getMembershipInfo').mockReturnValue({
       membershipId: 'membership-user-123',
       remainingCredits: 5, // Simulamos que tiene créditos disponibles
@@ -83,7 +83,7 @@ describe('ReserveHotDeskCommandHandler', () => {
     expect(result.includedInMembership).toBe(true);
   });
 
-  it('Debería asignar correctamente si la reserva NO está cubierta por la membresía', () => {
+  it('Deberia asignar correctamente si la reserva NO está cubierta por la membresia', () => {
     jest.spyOn(membershipsService, 'getMembershipInfo').mockReturnValue({
       membershipId: 'membership-user-123',
       remainingCredits: 0, // Simulamos que NO tiene créditos disponibles

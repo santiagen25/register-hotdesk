@@ -43,7 +43,7 @@ export class RegisterPackageCommandHandler {
     // Crear el paquete con fechas calculadas
     const packageInstance = new Package(credits, year, month);
 
-    // Agregar el paquete a la membresía
+    // Agregar el paquete a la membresia
     membership.addPackage(packageInstance);
     this.membershipRepository.save(membership);
 

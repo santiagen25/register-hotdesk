@@ -11,7 +11,7 @@ export class MembershipRepository {
   }
 
   findByUserId(userId: string): Membership | undefined {
-    console.log('Buscando membresía para userId:', userId);
+    console.log('Buscando membresia para userId:', userId);
     console.log('Estado actual de memberships:', this.memberships);
 
     return this.memberships.find((m) => m.userId === userId);
@@ -25,7 +25,7 @@ export class MembershipRepository {
     if (existingIndex !== -1) {
       this.memberships[existingIndex] = membership; // Actualiza si ya existe
     } else {
-      this.memberships.push(membership); // Agrega una nueva membresía
+      this.memberships.push(membership); // Agrega una nueva membresia
     }
   }
 
