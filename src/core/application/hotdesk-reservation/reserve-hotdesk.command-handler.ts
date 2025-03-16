@@ -15,7 +15,14 @@ export class ReserveHotDeskCommandHandler {
   execute(command: ReserveHotDeskCommand): HotDeskReservation {
     const { userId, date } = command;
 
-    if (!userId || typeof userId !== 'string' || !date) {
+    if (
+      !userId ||
+      typeof userId !== 'string' ||
+      !date ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
+      isNaN(Date.parse(date)) ||
+      new Date(date).toISOString().slice(0, 10) !== date
+    ) {
       throw new Error('400: Bad Request - Invalid input');
     }
 

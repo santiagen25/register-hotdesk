@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, Inject } from '@nestjs/common';
 import { ReserveMeetingRoomCommand } from './reserve-meeting-room.command';
 import { ReservationRepository } from './reservation.repository';
@@ -20,17 +22,20 @@ export class ReserveMeetingRoomCommandHandler {
   execute(command: ReserveMeetingRoomCommand): Reservation {
     const { meetingRoomId, userId, date, hour, duration } = command;
 
-    const meetingRoom = this.meetingRoomRepository.findByName(meetingRoomId);
+    const meetingRoom = this.meetingRoomRepository.findById(meetingRoomId);
     if (!meetingRoom) {
       throw new Error('404: Not Found - MeetingRoom does not exist');
     }
 
-    if (!Number.isInteger(hour) || hour < 0 || hour > 23) {
-      throw new Error('400: Bad Request - Invalid hour');
-    }
-
-    if (!Number.isInteger(duration) || duration < 1 || duration > 12) {
-      throw new Error('400: Bad Request - Invalid duration');
+    if (
+      !Number.isInteger(hour) ||
+      hour < 0 ||
+      hour > 23 ||
+      !Number.isInteger(duration) ||
+      duration < 1 ||
+      duration > 12
+    ) {
+      throw new Error('400: Bad Request - Invalid data');
     }
 
     //miramos que no haya conflicto de reservas en el mismo lapso de tiempo

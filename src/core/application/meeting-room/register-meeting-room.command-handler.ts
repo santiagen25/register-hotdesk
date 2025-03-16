@@ -13,14 +13,11 @@ export class RegisterMeetingRoomCommandHandler {
   execute(command: RegisterMeetingRoomCommand): MeetingRoom {
     if (
       !command.name ||
-      typeof command.name !== 'string' ||
-      command.name.trim() === ''
+      command.name.trim() === '' ||
+      !Number.isInteger(command.capacity) ||
+      command.capacity <= 0
     ) {
-      throw new Error('400: Bad Request - Invalid name');
-    }
-
-    if (!Number.isInteger(command.capacity) || command.capacity <= 0) {
-      throw new Error('400: Bad Request - Invalid capacity');
+      throw new Error('400: Bad Request - Invalid name or capacity');
     }
 
     if (this.repository.findByName(command.name)) {

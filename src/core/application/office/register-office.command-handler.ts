@@ -10,15 +10,16 @@ export class RegisterOfficeCommandHandler {
   ) {}
 
   execute(command: RegisterOfficeCommand): Office {
-    if (!Number.isInteger(command.number) || command.number <= 0) {
-      throw new Error('400: Bad Request - Invalid number');
-    }
-
     if (
-      command.leasePeriod !== undefined &&
-      (!Number.isInteger(command.leasePeriod) || command.leasePeriod <= 0)
+      !Number.isInteger(command.number) ||
+      command.number <= 0 ||
+      (command.leasePeriod !== undefined &&
+        (!Number.isInteger(command.leasePeriod) || command.leasePeriod <= 0)) ||
+      (command.status !== undefined &&
+        command.status !== 'Active' &&
+        command.status !== 'Inactive')
     ) {
-      throw new Error('400: Bad Request - Invalid leasePeriod');
+      throw new Error('400: Bad Request - Invalid fields');
     }
 
     if (this.repository.findByNumber(command.number)) {

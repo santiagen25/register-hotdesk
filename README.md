@@ -56,7 +56,10 @@ npm install
 ### 2. Levantar servidor
 npm run start
 
-### 3. Probar endpoints (Linux)
+### 3. Ejecutar tests
+npm run test
+
+### 4. Probar endpoints (Linux)
 - **HotDesk**
    curl -X POST http://localhost:3000/hotdesk \
      -H "Content-Type: application/json" \
